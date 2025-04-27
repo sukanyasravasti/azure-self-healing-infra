@@ -1,0 +1,36 @@
+# GitHub Actions workflow to deploy monitoring agent and alert rules to an existing VM
+
+name: Configure Existing VM for Self-Healing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Login to Azure using Service Principal
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+    - name: Deploy Azure Monitor Agent to existing VM
+      run: |
+        az deployment group create \
+          --resource-group your-resource-group \
+          --template-file infrastructure/setup_monitoring.bicep \
+          --parameters vmName="your-existing-vm-name" workspaceResourceId="/subscriptions/your-subscription-id/resourceGroups/your-resource-group/providers/Microsoft.OperationalInsights/workspaces/your-workspace"
+
+    - name: Deploy Fake Security Alert
+      run: |
+        az deployment group create \
+          --resource-group your-resource-group \
+          --template-file infrastructure/alert_rule_security.bicep \
+          --parameters workspaceResourceId="/subscriptions/your-subscription-id/resourceGroups/your-resource-group/providers/Microsoft.OperationalInsights/workspaces/your-workspace"

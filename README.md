@@ -3,3 +3,6 @@ I built a fun DevOps project recently using my personal Azure cloud subscription
 Simplified Logic Diagram:
 
 ![Screenshot 2025-04-27 at 3 15 56 PM](https://github.com/user-attachments/assets/03ce2413-8972-4f33-88d9-44dfcc323eb3)
+
+Technology Stack Used:
+Authenticate (SPN) → GitHub Actions (Deploy VM + Monitoring) → Azure Monitor Agent (Collect Logs) → Log Analytics + KQL → Alerts → Automation Runbook → AI Incident Analysis

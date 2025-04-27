@@ -5,10 +5,9 @@ For simplicity, this project is limited to 1 VM already deployed on Azure that i
 
 - Technology Stack Used and Steps: 
 
-1. I use a Service Principal (SPN) to authenticate to my Azure account from GitHub Actions.
-Using Bicep templates (setup_monitoring.bicep and alert_rule_security.bicep), I configure monitoring on an existing VM to collect logs and set up alert rules automatically. Logs are collected into a Log Analytics workspace. KQL queries are used to detect simulated security threats.
-
-2. When an alert fires, an Azure Automation Runbook executes, running PowerShell scripts (AnalyzeSecurityIncident.ps1 and SelfHealingRemediation.ps1) to perform AI-driven incident analysis and automatically remediate the threat by restarting the VM
+1. I use a Service Principal (SPN) to authenticate to my Azure account from GitHub Actions which starts the automation. 
+2. Using Bicep templates, I configure monitoring on an existing VM to collect logs and set up alert rules automatically. Logs are collected into a Log Analytics workspace. KQL queries are used to detect simulated security threats.
+3. When an alert fires, an Azure Automation Runbook executes, running PowerShell scripts to perform AI-driven incident analysis and automatically remediate the threat by restarting the VM.
 
 - Simplified Logic Diagram:
 

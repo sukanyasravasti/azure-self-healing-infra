@@ -16,20 +16,17 @@ For simplicity, this project is limited to 1 VM already deployed on Azure that i
 
 - How to run this workflow:
 1. Clone this repo
-2	Set GitHub Secrets (SPN info)
+2.	Set GitHub Secrets (SPN info)
 GitHub → Your Repo → Settings → Secrets and variables → Actions → New repository secret
 AZURE_CLIENT_ID	Your Service Principal App (client) ID
 AZURE_CLIENT_SECRET	Your Service Principal Secret (password)
 AZURE_TENANT_ID	Your Azure AD tenant ID
 AZURE_SUBSCRIPTION_ID	Your Azure Subscription ID
 
-3	Update deploy.yml with your real Azure names
+3.	Update deploy.yml with your real Azure names
 
-4	Manually trigger GitHub Actions from GitHub
+4.	Manually trigger GitHub Actions from GitHub
 Go to your GitHub repository
-
 Click Actions tab
-
 Click on "Configure Existing VM for Self-Healing" workflow
-
 Click the Run workflow button manually

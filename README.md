@@ -26,7 +26,7 @@ AZURE_SUBSCRIPTION_ID	Your Azure Subscription ID
 3.	Update deploy.yml with your real Azure names
 
 4.	Manually trigger GitHub Actions from GitHub
-Go to your GitHub repository
-Click Actions tab
-Click on "Configure Existing VM for Self-Healing" workflow
-Click the Run workflow button manually
+- Go to your GitHub repository
+- Click Actions tab
+- Click on "Configure Existing VM for Self-Healing" workflow
+- Click the Run workflow button manually

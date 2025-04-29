@@ -1,34 +1,27 @@
-# GitHub Actions workflow to deploy monitoring agent and alert rules to an existing VM
-
 name: Configure Existing VM for Self-Healing
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual trigger
 
 jobs:
-  configure:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Login to Azure using Service Principal
       uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        auth-type: 'SERVICE_PRINCIPAL'
+        auth-type: SERVICE_PRINCIPAL
 
     - name: Deploy Azure Monitor Agent to existing VM
       run: |
         az deployment group create \
           --resource-group selfHealingInfra-rg \
           --template-file infrastructure/setup_monitoring.bicep \
-          --parameters vmName="AzureVM" workspaceResourceId="/subscriptions/240623fd-297f-4c97-833d-66f0166f67d7/resourceGroups/selfHealingInfra-rg/providers/Microsoft.OperationalInsights/workspaces/selfHealingLogs"
-
-    - name: Deploy Fake Security Alert
-      run: |
-        az deployment group create \
-          --resource-group selfHealingInfra-rg \
-          --template-file infrastructure/alert_rule_security.bicep \
-          --parameters workspaceResourceId="/subscriptions/240623fd-297f-4c97-833d-66f0166f67d7/resourceGroups/selfHealingInfra-rg/providers/Microsoft.OperationalInsights/workspaces/selfHealingLogs"
+          --parameters vmName="your-existing-vm-name" \
+                       workspaceResourceId="/subscriptions/your-subscription-id/resourceGroups/selfHealingInfra-rg/providers/Microsoft.OperationalInsights/workspaces/your-workspace-name" \
+                       location="eastus" # <-- replace eastus with your RG/VM region

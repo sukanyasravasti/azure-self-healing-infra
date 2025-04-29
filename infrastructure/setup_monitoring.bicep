@@ -12,6 +12,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-03-01' existing = {
 resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' = {
   parent: vm
   name: 'AzureMonitorWindowsAgent'
+  location: location
   properties: {
     publisher: 'Microsoft.Azure.Monitor'
     type: 'AzureMonitorWindowsAgent'

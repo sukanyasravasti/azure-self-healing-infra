@@ -5,7 +5,7 @@ resource securityAlert 'Microsoft.Insights/scheduledQueryRules@2023-03-15-previe
   location: resourceGroup().location
   properties: {
     displayName: 'Fake Threat Simulation'
-    description: 'Simulates a fake security threat for demo purposes'
+    description: 'Simulated brute-force and suspicious logins'
     severity: 2
     enabled: true
 
@@ -24,13 +24,19 @@ resource securityAlert 'Microsoft.Insights/scheduledQueryRules@2023-03-15-previe
             ]
             | extend TimeGenerated = now()
           '''
-          timeWindow: 'PT5M'
-          evaluationFrequency: 'PT5M'
-          operator: 'GreaterThan'
+          timeAggregation: 'Count'
           threshold: 0
+          operator: 'GreaterThan'
+          failingPeriods: {
+            numberOfEvaluationPeriods: 1
+            minFailingPeriodsToAlert: 1
+          }
         }
       ]
     }
+
+    evaluationFrequency: 'PT5M'
+    windowSize: 'PT5M'
 
     actions: {
       actionGroups: [

@@ -1,6 +1,7 @@
 // Connect an existing VM to Log Analytics by installing Azure Monitor Agent
 param vmName string
 param workspaceResourceId string
+param location string = resourceGroup().location
 
 // Reference existing Virtual Machine
 resource vm 'Microsoft.Compute/virtualMachines@2022-03-01' existing = {

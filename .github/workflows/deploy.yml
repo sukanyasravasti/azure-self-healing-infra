@@ -29,7 +29,7 @@ jobs:
     
 
     - name: Deploy Fake Security Alert
-       run: |
+      run: |
          az deployment group create \
            --resource-group selfHealingInfra-rg \
            --template-file infrastructure/alert_rule_security.bicep \

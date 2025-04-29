@@ -22,6 +22,6 @@ jobs:
         az deployment group create \
           --resource-group selfHealingInfra-rg \
           --template-file infrastructure/setup_monitoring.bicep \
-          --parameters vmName="your-existing-vm-name" \
-                       workspaceResourceId="/subscriptions/your-subscription-id/resourceGroups/selfHealingInfra-rg/providers/Microsoft.OperationalInsights/workspaces/your-workspace-name" \
+          --parameters vmName="AzureVM" \
+                       workspaceResourceId="/subscriptions/240623fd-297f-4c97-833d-66f0166f67d7/resourceGroups/selfHealingInfra-rg/providers/Microsoft.OperationalInsights/workspaces/selfHealingLogs" \
                        location="eastus" # <-- replace eastus with your RG/VM region

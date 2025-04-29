@@ -1,7 +1,7 @@
 // Create an Azure Monitor scheduled query alert for fake threat simulation
 param workspaceResourceId string
 
-resource securityAlert 'Microsoft.Insights/scheduledQueryRules@2021-08-01-preview' = {
+resource securityAlert 'Microsoft.Insights/scheduledQueryRules@2023-12-01' = {
   name: 'FakeSecurityThreatDetected'
   location: resourceGroup().location
   properties: {

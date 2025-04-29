@@ -1,16 +1,30 @@
-# Automatically remediate VM threats by restarting the VM
+// setup_monitoring.bicep
 
-param(
-  [string]$VMName,              # Name of the existing VM
-  [string]$ResourceGroupName     # Resource Group containing the VM
-)
+@description('The name of the existing virtual machine to onboard to Azure Monitor')
+param vmName string
 
-Write-Output "Starting Self-Healing Remediation for VM: $VMName in Resource Group: $ResourceGroupName..."
+@description('Resource ID of the Log Analytics workspace to connect the VM to')
+param workspaceResourceId string
 
-# Authenticate inside Azure Automation (Managed Identity)
-Login-AzAccount -Identity
+@description('The location for the deployment')
+param location string = resourceGroup().location
 
-# Restart the VM as a basic recovery action
-Restart-AzVM -ResourceGroupName $ResourceGroupName -Name $VMName -Force
+resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' existing = {
+  name: vmName
+}
 
-Write-Output "VM Restarted Successfully as part of Auto-Remediation."
+// Deploy Azure Monitor Agent extension to the existing VM
+resource azureMonitorAgentExtension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
+  name: 'AzureMonitorWindowsAgent'
+  parent: vm
+  location: location
+  properties: {
+    publisher: 'Microsoft.Azure.Monitor'
+    type: 'AzureMonitorWindowsAgent'
+    typeHandlerVersion: '1.0'
+    autoUpgradeMinorVersion: true
+    settings: {
+      workspaceResourceId: workspaceResourceId
+    }
+  }
+}

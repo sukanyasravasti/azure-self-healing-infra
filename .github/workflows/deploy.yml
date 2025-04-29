@@ -25,3 +25,12 @@ jobs:
           --parameters vmName="AzureVM" \
                        workspaceResourceId="/subscriptions/240623fd-297f-4c97-833d-66f0166f67d7/resourceGroups/selfHealingInfra-rg/providers/Microsoft.OperationalInsights/workspaces/selfHealingLogs" \
                        location="eastus" # <-- replace eastus with your RG/VM region
+
+    
+
+    - name: Deploy Fake Security Alert
+       run: |
+         az deployment group create \
+           --resource-group selfHealingInfra-rg \
+           --template-file infrastructure/alert_rule_security.bicep \
+           --parameters workspaceResourceId="/subscriptions/240623fd-297f-4c97-833d-66f0166f67d7/resourceGroups/selfHealingInfra-rg/providers/Microsoft.OperationalInsights/workspaces/selfHealingLogs"
